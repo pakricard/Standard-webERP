@@ -19,6 +19,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
+
+		/* Log the script we run so we can optimize CPU time*/	
+		$_SESSION['ScriptStartTime'] = microtime();
+		
 		/* if not logged in */
 
 		$_SESSION['AccessLevel'] = '';
@@ -176,6 +180,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = __('There was a problem deleting expired audit-trail history');
 							$Result = DB_query($SQL);
+
+							 $SQL = "DELETE FROM auditscripts
+									WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+							$ErrMsg = __('There was a problem deleting expired audit-script history');
+							$Result = DB_query($SQL);
+
 						}
 					}
 				}
