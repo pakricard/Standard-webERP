@@ -387,14 +387,12 @@ if (isset($_POST['submit'])) {
 		}
 
 		$ErrMsg =  __('The system configuration could not be updated because');
-		if (sizeof($SQL) > 1 ) {
+		if (sizeof($SQL) >= 1 ) {
 			DB_Txn_Begin();
 			foreach ($SQL as $Line) {
 				$Result = DB_query($Line, $ErrMsg);
 			}
 			DB_Txn_Commit();
-		} elseif (sizeof($SQL)==1) {
-			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		prnMsg( __('System configuration updated'),'success');
