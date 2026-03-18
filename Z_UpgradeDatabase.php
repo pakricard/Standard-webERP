@@ -172,7 +172,7 @@ if (!isset($_POST['continue'])) {
 	// use a button here for consistency with the "Continue" button (used to initiate updates)
 	echo '<div class="centre">
 		<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
-			<button>', __('Login again for changes to take effect'), '</button>
+			<button>', __('Login again for changes to take affect'), '</button>
 		</a>
 	</div>';
 
