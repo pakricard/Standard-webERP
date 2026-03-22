@@ -147,7 +147,7 @@ $Methods = array(
 );
 
 foreach ($Methods as $method) {
-    InsertRecord('forecastmethods', array('methodname'), array($method[1]), array('methodid', 'methodname', 'methoddesc', 'requireshistory', 'active'), array($method[0],$method[1],$method[2] ,$method[3]));
+    InsertRecord('forecastmethods', array('methodname'), array($method[1]), array('methodid', 'methodname', 'methoddesc', 'requireshistory', 'active'), array($method[0],$method[1],$method[2] ,$method[3]), 1);
 }
 
 // Create Forecast Metrics table
