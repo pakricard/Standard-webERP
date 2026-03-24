@@ -448,15 +448,20 @@ function PettyCashTabCurrentBalance($Tab) {
 }
 
 function CurrencyTolerance($Currency = '') {
-	if (($Currency == $_SESSION['CompanyRecord']['currencydefault']) 
-		or ($Currency != '')) {
+	if (($Currency == $_SESSION['CompanyRecord']['currencydefault'])
+		or ($Currency == '')) {
 		// it is the home currency
 		return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
 	} else {
 		// it is a foreign currency so get its decimal places
-		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currency = '" . $Currency . "'");
-		$MyRow = DB_fetch_row($Result);
-		return pow(10, -$MyRow[0]);
+		$Result = DB_query("SELECT decimalplaces FROM currencies WHERE currabrev = '" . $Currency . "'");
+		$MyRow = DB_fetch_array($Result);
+		if (isset($MyRow['decimalplaces'])) {
+			return pow(10, -$MyRow['decimalplaces']);
+		} else {
+			// Currency not found, fallback to default company decimal places
+			return pow(10, -$_SESSION['CompanyRecord']['decimalplaces']);
+		}
 	}
 }
 
