@@ -95,7 +95,7 @@ if (!isset($_POST['continue'])) {
 				echo '<tr>
 					<td><div class="expand_icon" id="expand_icon', $x, '"></div></td>
 					<td>', $UpdateNumber, '</td>
-					<td>', __('No descriptrion can be found for this update'), '</td>
+					<td>', __('Description not found'), '</td>
 				</tr>';
 			}
 			echo '<tr>
