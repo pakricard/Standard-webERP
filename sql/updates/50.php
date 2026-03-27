@@ -12,5 +12,5 @@ ChangeColumnType('price', 'purchdata', 'decimal(24,8)', ' NOT NULL ', '');
 DropTable('lastcostrollup');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), __('Increase precision of cost fields to 8 decimal places'), true);
+	UpdateDBNo(basename(__FILE__, '.php'), __('Increase precision of cost fields to 8 decimal places'));
 }
