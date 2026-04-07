@@ -111,7 +111,7 @@ if ($Rows == 0) { /* Then the database does not exist */
 
 	/* Need to make sure NO data is removed from the existing DB */
 
-	$SQL = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
+	$SQL = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $Database . "'";
 	if (!($Result = @mysqli_query($DB, $SQL))) {
 		$Errors[] = __('Failed enumerating existing database tables');
 	} else {
