@@ -19,7 +19,7 @@ CREATE TABLE `hrperformancereviews` (
 	`createdby` VARCHAR(50) DEFAULT NULL,
 	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifiedby` VARCHAR(50) DEFAULT NULL,
-	`modifieddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`modifieddate` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`reviewid`),
 	KEY `idx_employee` (`employeeid`),
 	KEY `idx_reviewer` (`reviewerid`)
