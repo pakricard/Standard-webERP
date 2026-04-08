@@ -76,7 +76,8 @@ if (isset($_POST['Submit'])) {
 					reviewerid = " . ($ReviewerID === null ? 'NULL' : "'" . $ReviewerID . "'") . ",
 					status = '" . $Status . "',
 					overallrating = " . ($OverallRating === null ? 'NULL' : "'" . $OverallRating . "'") . ",
-					comments = '" . $Comments . "'
+					comments = '" . $Comments . "',
+					modifieddate = NOW()
 				WHERE appraisalid = " . $AppraisalID;
 
 			$ErrMsg = __('Failed to update appraisal');

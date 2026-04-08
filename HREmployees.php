@@ -56,7 +56,8 @@ if (isset($_POST['Submit'])) {
 					employmenttype = '" . $_POST['EmploymentType'] . "',
 					locationid = " . (int)$_POST['LocationID'] . ",
 					userid = '" . $_POST['UserID'] . "',
-					modifiedby = '" . $_SESSION['UserID'] . "'
+					modifiedby = '" . $_SESSION['UserID'] . "',
+					modifieddate = NOW()
 				WHERE employeeid = '" . $SelectedEmployee . "'";
 
 		$ErrMsg = __('Could not update the employee because');
