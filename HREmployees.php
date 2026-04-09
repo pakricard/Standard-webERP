@@ -55,6 +55,8 @@ if (isset($_POST['Submit'])) {
 					employmentstatus = '" . $_POST['EmploymentStatus'] . "',
 					employmenttype = '" . $_POST['EmploymentType'] . "',
 					locationid = " . (int)$_POST['LocationID'] . ",
+					stockid = " . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
+					normalhours = " . (float)$_POST['NormalHours'] . ",
 					userid = '" . $_POST['UserID'] . "',
 					modifiedby = '" . $_SESSION['UserID'] . "',
 					modifieddate = NOW()
@@ -91,6 +93,8 @@ if (isset($_POST['Submit'])) {
 						employmentstatus,
 						employmenttype,
 						locationid,
+						stockid,
+						normalhours,
 						userid,
 						createdby
 					) VALUES (
@@ -109,6 +113,8 @@ if (isset($_POST['Submit'])) {
 						'" . $_POST['EmploymentStatus'] . "',
 						'" . $_POST['EmploymentType'] . "',
 						" . (int)$_POST['LocationID'] . ",
+						" . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
+						" . (float)$_POST['NormalHours'] . ",
 						'" . $_POST['UserID'] . "',
 						'" . $_SESSION['UserID'] . "'
 					)";
@@ -328,6 +334,29 @@ while ($Row = DB_fetch_array($Result)) {
 	}
 }
 echo '</select>
+	</field>';
+
+// Stock ID (Labour Item) dropdown
+echo '<field>
+		<label>' . __('Labour Item') . ':</label>
+		<select name="StockID">';
+echo '<option value="">' . __('None') . '</option>';
+$SQL = "SELECT stockid, description FROM stockmaster WHERE mbflag='D' ORDER BY stockid";
+$Result = DB_query($SQL);
+while ($Row = DB_fetch_array($Result)) {
+	if (isset($_POST['stockid']) AND $_POST['stockid'] == $Row['stockid']) {
+		echo '<option selected="selected" value="' . $Row['stockid'] . '">' . $Row['stockid'] . ' - ' . $Row['description'] . '</option>';
+	} else {
+		echo '<option value="' . $Row['stockid'] . '">' . $Row['stockid'] . ' - ' . $Row['description'] . '</option>';
+	}
+}
+echo '</select>
+	</field>';
+
+// Normal Hours
+echo '<field>
+		<label>' . __('Normal Hours/Week') . ':</label>
+		<input type="number" name="NormalHours" step="0.5" min="0" max="168" value="' . (isset($_POST['normalhours']) ? $_POST['normalhours'] : '40') . '" />
 	</field>';
 
 // User ID dropdown for linking to www_users

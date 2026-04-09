@@ -18,6 +18,8 @@ CREATE TABLE `hremployees` (
 	`employmentstatus` ENUM('Active','Terminated','On Leave','Suspended') DEFAULT 'Active',
 	`employmenttype` ENUM('Full-Time','Part-Time','Contract','Temporary') DEFAULT NULL,
 	`locationid` INT(11) DEFAULT NULL,
+	`stockid` VARCHAR(64) DEFAULT NULL COMMENT 'FK with stockmaster - labour item',
+	`normalhours` DOUBLE NOT NULL DEFAULT 40 COMMENT 'Normal hours per week',
 	`currentsalary` DECIMAL(15,2) DEFAULT NULL,
 	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifieddate` DATETIME DEFAULT NULL,
@@ -29,5 +31,6 @@ CREATE TABLE `hremployees` (
 	KEY `idx_supervisor` (`supervisorid`),
 	KEY `idx_department` (`departmentid`),
 	KEY `idx_position` (`positionid`),
-	KEY `idx_status` (`employmentstatus`)
+	KEY `idx_status` (`employmentstatus`),
+	KEY `idx_stockid` (`stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
