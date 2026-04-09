@@ -211,11 +211,15 @@ if (isset($_GET['view'])) {
 		echo '<tr><td colspan="8">' . __('No compensation history found') . '</td></tr>';
 	} else {
 		while ($Row = DB_fetch_array($Result)) {
+			$SalaryDisplay = locale_number_format($Row['currentsalary'], $_SESSION['CompanyRecord']['decimalplaces']);
+			if (!empty($Row['currencycode'])) {
+				$SalaryDisplay .= ' ' . $Row['currencycode'];
+			}
 			echo '<tr class="striped_row">
 					<td>' . ConvertSQLDate($Row['effectivedate']) . '</td>
 					<td>' . $Row['gradecode'] . '</td>
 					<td>' . ($Row['stepnumber'] ? $Row['stepnumber'] : '-') . '</td>
-					<td class="number">' . locale_number_format($Row['currentsalary'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . $SalaryDisplay . '</td>
 					<td class="number">' . ($Row['increasepercentage'] ? number_format($Row['increasepercentage'], 2) . '%' : '-') . '</td>
 					<td class="number">' . ($Row['increaseamount'] ? locale_number_format($Row['increaseamount'], $_SESSION['CompanyRecord']['decimalplaces']) : '-') . '</td>
 					<td>' . $Row['changereason'] . '</td>
@@ -257,7 +261,7 @@ echo '<table class="selection">
 
 $SQL = "SELECT e.employeeid, e.employeenumber, e.firstname, e.lastname,
 			d.description, p.positiontitle,
-			c.compensationid, c.basesalary, c.effectivedate,
+			c.compensationid, c.basesalary, c.currencycode, c.effectivedate,
 			g.paygradecode, g.paygradename, s.stepnumber
 		FROM hremployees e
 		LEFT JOIN departments d ON e.departmentid = d.departmentid
@@ -279,6 +283,13 @@ if (DB_num_rows($Result) == 0) {
 	echo '<tr><td colspan="9">' . __('No employees found') . '</td></tr>';
 } else {
 	while ($Row = DB_fetch_array($Result)) {
+		$SalaryDisplay = '-';
+		if ($Row['basesalary']) {
+			$SalaryDisplay = locale_number_format($Row['basesalary'], $_SESSION['CompanyRecord']['decimalplaces']);
+			if (!empty($Row['currencycode'])) {
+				$SalaryDisplay .= ' ' . $Row['currencycode'];
+			}
+		}
 		echo '<tr class="striped_row">
 				<td>' . $Row['employeenumber'] . '</td>
 				<td>' . $Row['firstname'] . ' ' . $Row['lastname'] . '</td>
@@ -286,7 +297,7 @@ if (DB_num_rows($Result) == 0) {
 				<td>' . $Row['positiontitle'] . '</td>
 				<td>' . $Row['paygradecode'] . '</td>
 				<td>' . ($Row['stepnumber'] ? $Row['stepnumber'] : '-') . '</td>
-				<td class="number">' . ($Row['basesalary'] ? locale_number_format($Row['basesalary'], $_SESSION['CompanyRecord']['decimalplaces']) : '-') . '</td>
+				<td class="number">' . $SalaryDisplay . '</td>
 				<td>' . ($Row['effectivedate'] ? ConvertSQLDate($Row['effectivedate']) : '-') . '</td>
 				<td>
 					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?view=' . $Row['employeeid'] . '">' . __('View History') . '</a> |

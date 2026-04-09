@@ -1,7 +1,7 @@
 <?php
 
-AddColumn('stockid', 'hremployees', 'VARCHAR(64)', ' Null ', 'NULL', 'locationid');
-AddColumn('normalhours', 'hremployees', 'DOUBLE', ' NOT Null ', '40', 'stockid');
+AddColumn('stockid', 'hremployees', 'VARCHAR(64)', 'NULL', '', 'locationid');
+AddColumn('normalhours', 'hremployees', 'DOUBLE', 'NOT NULL', '40', 'stockid');
 
 AddIndex(array('stockid'), 'hremployees', 'idx_stockid');
 

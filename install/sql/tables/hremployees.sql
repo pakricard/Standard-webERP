@@ -21,6 +21,7 @@ CREATE TABLE `hremployees` (
 	`stockid` VARCHAR(64) DEFAULT NULL COMMENT 'FK with stockmaster - labour item',
 	`normalhours` DOUBLE NOT NULL DEFAULT 40 COMMENT 'Normal hours per week',
 	`currentsalary` DECIMAL(15,2) DEFAULT NULL,
+	`currency` CHAR(3) DEFAULT NULL COMMENT 'ISO 4217 currency code',
 	`createddate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`modifieddate` DATETIME DEFAULT NULL,
 	`createdby` VARCHAR(50) DEFAULT NULL,
