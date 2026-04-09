@@ -57,6 +57,7 @@ if (isset($_POST['Submit'])) {
 					locationid = " . (int)$_POST['LocationID'] . ",
 					stockid = " . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 					normalhours = " . (float)$_POST['NormalHours'] . ",
+					currency = " . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "NULL") . ",
 					userid = '" . $_POST['UserID'] . "',
 					modifiedby = '" . $_SESSION['UserID'] . "',
 					modifieddate = NOW()
@@ -95,6 +96,7 @@ if (isset($_POST['Submit'])) {
 						locationid,
 						stockid,
 						normalhours,
+						currency,
 						userid,
 						createdby
 					) VALUES (
@@ -115,6 +117,7 @@ if (isset($_POST['Submit'])) {
 						" . (int)$_POST['LocationID'] . ",
 						" . ($_POST['StockID'] != '' ? "'" . $_POST['StockID'] . "'" : "NULL") . ",
 						" . (float)$_POST['NormalHours'] . ",
+						" . ($_POST['Currency'] != '' ? "'" . $_POST['Currency'] . "'" : "NULL") . ",
 						'" . $_POST['UserID'] . "',
 						'" . $_SESSION['UserID'] . "'
 					)";
@@ -357,6 +360,23 @@ echo '</select>
 echo '<field>
 		<label>' . __('Normal Hours/Week') . ':</label>
 		<input type="number" name="NormalHours" step="0.5" min="0" max="168" value="' . (isset($_POST['normalhours']) ? $_POST['normalhours'] : '40') . '" />
+	</field>';
+
+// Currency dropdown
+echo '<field>
+		<label>' . __('Salary Currency') . ':</label>
+		<select name="Currency">';
+echo '<option value="">' . __('None') . '</option>';
+$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+$Result = DB_query($SQL);
+while ($Row = DB_fetch_array($Result)) {
+	if (isset($_POST['currency']) AND $_POST['currency'] == $Row['currabrev']) {
+		echo '<option selected="selected" value="' . $Row['currabrev'] . '">' . $Row['currency'] . ' (' . $Row['currabrev'] . ')</option>';
+	} else {
+		echo '<option value="' . $Row['currabrev'] . '">' . $Row['currency'] . ' (' . $Row['currabrev'] . ')</option>';
+	}
+}
+echo '</select>
 	</field>';
 
 // User ID dropdown for linking to www_users
