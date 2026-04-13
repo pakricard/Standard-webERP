@@ -19,6 +19,9 @@ ChangeColumnName('manufacturers_url', 'brands', 'VARCHAR(50)', 'NULL', '', 'bran
 ChangeColumnName('manufacturers_image', 'brands', 'VARCHAR(64)', 'NULL', '', 'brands_image', '');
 
 // rename secondary index(s)
+// - SILENTLY FAILS WITH NO EFFECT, the old index still exists after the update runs
+//   but renaming was only for correctness and leaving as-is should have no undesired effect
+//   (keyname: "manufacturers_name", column" "brands_name")
 // DropIndex($Table, $Name)
 DropIndex('brands', 'manufacturers_name');
 // AddIndex($Columns, $Table, $Name)
@@ -29,9 +32,6 @@ AddIndex(array('brands_name'), 'brands', 'idx_brands_name');
 // - integer default value is required
 // ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $AutoIncrement = '')
 ChangeColumnName('manufacturers_id', 'salescatprod', 'INT(11)', 'NOT NULL', '0', 'brands_id', '');
-// Use direct SQL because ChangeColumnName() fails due to "invalid value"
-//$SQL = "ALTER TABLE `salescatprod` CHANGE `manufacturers_id` `brands_id` INT(11) NOT NULL;";
-//$Result = DB_query($SQL);
 
 // rename secondary index(s)
 // DropIndex($Table, $Name)
