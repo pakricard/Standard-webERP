@@ -12,7 +12,6 @@
 RenameTable('manufacturers', 'brands');
 
 // rename table columns to indicate "Brands" 
-// URL and image are not required when inserting data
 // ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $AutoIncrement = '')
 ChangeColumnName('manufacturers_id', 'brands', 'INT(11)', 'NOT NULL', '', 'brands_id', 'AUTO_INCREMENT');
 ChangeColumnName('manufacturers_name', 'brands', 'VARCHAR(32)', 'NOT NULL', '', 'brands_name', '');
@@ -26,13 +25,13 @@ DropIndex('brands', 'manufacturers_name');
 AddIndex(array('brands_name'), 'brands', 'idx_brands_name');
 
 // 1.2 salescatprod table
-// rename manufacturers_id to brands_id
-// URL and image are not required when inserting data
+// rename table column manufacturers_id to brands_id
+// - integer default value is required
 // ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $AutoIncrement = '')
-//ChangeColumnName('manufacturers_id', 'salescatprod', 'INT(11)', 'NOT NULL', '', 'brands_id', '');
+ChangeColumnName('manufacturers_id', 'salescatprod', 'INT(11)', 'NOT NULL', '0', 'brands_id', '');
 // Use direct SQL because ChangeColumnName() fails due to "invalid value"
-$SQL = "ALTER TABLE `salescatprod` CHANGE `manufacturers_id` `brands_id` INT(11) NOT NULL;";
-$Result = DB_query($SQL);
+//$SQL = "ALTER TABLE `salescatprod` CHANGE `manufacturers_id` `brands_id` INT(11) NOT NULL;";
+//$Result = DB_query($SQL);
 
 // rename secondary index(s)
 // DropIndex($Table, $Name)
