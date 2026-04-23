@@ -1124,7 +1124,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		</field>';
 
 	//Payment Terms
-	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms");
+	$Result = DB_query("SELECT terms, termsindicator FROM paymentterms ORDER BY terms ASC");
 	echo '<field>
 			<label for="PaymentTerms">' . __('Payment Terms') . ':</label>
 			<select name="PaymentTerms">';
