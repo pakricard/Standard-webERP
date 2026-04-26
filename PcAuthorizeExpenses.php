@@ -344,15 +344,16 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<fieldset>'; //Main table
+
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE authorizerexpenses='" . $_SESSION['UserID'] . "'
+		WHERE authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
 		ORDER BY tabcode";
 	$Result = DB_query($SQL);
-	echo '<field>
-			<td>', __('Authorise expenses on petty cash tab'), ':</td>
-			<td><select required="required" name="SelectedTabs">';
+	echo '<fieldset>
+			<field>
+				<label>', __('Authorise expenses on petty cash tab'), '</label>
+				<select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';

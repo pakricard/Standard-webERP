@@ -140,7 +140,7 @@ if (!isset($SelectedTabs)) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	$SQL = "SELECT tabcode
 			FROM pctabs
-			WHERE assigner='" . $_SESSION['UserID'] . "'
+			WHERE assigner LIKE '%" . $_SESSION['UserID'] . "%'
 			ORDER BY tabcode";
 	$Result = DB_query($SQL);
 	echo '<fieldset>
