@@ -8,7 +8,7 @@ $BookMark = 'PCTabSetup';
 include(__DIR__ . '/includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['SelectedTab'])) {
@@ -63,14 +63,41 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		prnMsg(__('You must select a tax group'), 'error');
 	}
+	
+	if ($InputError == 0) {
+		$AuthorisersExpenses = '';
+		$i = 0;
+		foreach ($_POST['SelectAuthoriserExpenses'] as $Value) {
+			if ($i) $AuthorisersExpenses .= ',';
+			$AuthorisersExpenses .= $Value;
+			$i++;
+		}
+
+		$AuthorisersCash = '';
+		$i = 0;
+		foreach ($_POST['SelectAuthoriserCash'] as $Value) {
+			if ($i) $AuthorisersCash .= ',';
+			$AuthorisersCash .= $Value;
+			$i++;
+		}
+
+		$Assigners = '';
+		$i = 0;
+		foreach ($_POST['SelectAssigner'] as $Value) {
+			if ($i) $Assigners .= ',';
+			$Assigners .= $Value;
+			$i++;
+		}
+	}	
+
 	if (isset($SelectedTab) and $InputError != 1) {
 		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
 									tablimit = '" . filter_number_format($_POST['TabLimit']) . "',
-									assigner = '" . $_POST['SelectAssigner'] . "',
-									authorizer = '" . $_POST['SelectAuthoriserCash'] . "',
-									authorizerexpenses = '" . $_POST['SelectAuthoriserExpenses'] . "',
+									assigner = '" . $Assigners . "',
+									authorizer = '" . $AuthorisersCash . "',
+									authorizerexpenses = '" . $AuthorisersExpenses . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "',
 									taxgroupid='" . $_POST['TaxGroup'] . "'
@@ -104,9 +131,9 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['SelectTabs'] . "',
 									'" . $_POST['SelectCurrency'] . "',
 									'" . filter_number_format($_POST['TabLimit']) . "',
-									'" . $_POST['SelectAssigner'] . "',
-									'" . $_POST['SelectAuthoriserCash'] . "',
-									'" . $_POST['SelectAuthoriserExpenses'] . "',
+									'" . $Assigners . "',
+									'" . $AuthorisersCash . "',
+									'" . $AuthorisersExpenses . "',
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "',
 									'" . $_POST['TaxGroup'] . "'
@@ -126,6 +153,7 @@ if (isset($_POST['Submit'])) {
 		unset($_POST['TabLimit']);
 		unset($_POST['SelectAssigner']);
 		unset($_POST['SelectAuthoriserCash']);
+		unset($_POST['SelectAuthoriserExpenses']);
 		unset($_POST['GLAccountCash']);
 		unset($_POST['GLAccountPcashTab']);
 		unset($_POST['TaxGroup']);
@@ -319,52 +347,64 @@ if (!isset($_GET['delete'])) {
 		</field>';
 	echo '<field>
 			<label for="SelectAssigner">', __('Cash Assigner'), ':</label>
-			<select required="required" name="SelectAssigner">';
+			<td><select multiple="multiple" name="SelectAssigner[]">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAssigner']) and $MyRow['userid'] == $_POST['SelectAssigner']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Assigners = explode(',',$_POST['SelectAssigner']);
+		if (isset($_POST['SelectAssigner']) and in_array($MyRow['userid'],$Assigners)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get assigner
 	echo '</select>
 		</field>';
 	echo '<field>
 			<label for="SelectAuthoriserCash">', __('Authoriser - Cash'), ':</label>
-			<select required="required" name="SelectAuthoriserCash">';
+			<td><select multiple="multiple" name="SelectAuthoriserCash[]">';
+
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAuthoriserCash']) and $MyRow['userid'] == $_POST['SelectAuthoriserCash']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Authorizer = explode(',',$_POST['SelectAuthoriserCash']);
+		if (isset($_POST['SelectAuthoriserCash']) and in_array($MyRow['userid'],$Authorizer)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get authoriser
+
 	echo '</select>
 		</field>';
 	echo '<field>
 			<label for="SelectAuthoriserExpenses">', __('Authoriser - Expenses'), ':</label>
-			<select required="required" name="SelectAuthoriserExpenses">';
+			<td><select multiple="multiple" name="SelectAuthoriserExpenses[]">';
+
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAuthoriserExpenses']) and $MyRow['userid'] == $_POST['SelectAuthoriserExpenses']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Authorizer = explode(',',$_POST['SelectAuthoriserExpenses']);
+		if (isset($_POST['SelectAuthoriserExpenses']) and in_array($MyRow['userid'],$Authorizer)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get authoriser
 	echo '</select>
 		</field>';
