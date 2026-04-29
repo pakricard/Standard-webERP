@@ -3937,7 +3937,7 @@
         "gggeek/polyfill-gettext": 20,
         "phplot/phplot": 5
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
@@ -3960,5 +3960,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
