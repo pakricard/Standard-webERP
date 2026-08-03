@@ -26,6 +26,9 @@ nbproject/
 Thumbs.db
 .DS_Store
 *:Zone.Identifier
+## Copilot for GitHub
+/.github/copilot-instructions*
+
 # In PTADU scenario, the credentials are stored in another file (KLConfig/KLCredentials.php) under repository PTADU-webERP-Secrets)
 /config.php
 
@@ -42,9 +45,7 @@ Thumbs.db
 ## .git/ in composer-installed projects (created by git clone not zipball)
 /vendor/phplot/phplot/.git/
 
-# KL settings
 ## other
-# KL settings END
 KLConfig/
 
 # DO NOT EVER distribute the local config.php to avoid accidential disclosure

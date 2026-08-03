@@ -421,6 +421,7 @@ class Cart {
 
 } /* end of cart class defintion */
 
+#[\AllowDynamicProperties]
 class LineDetails {
 	var $LineNumber;
 	var $StockID;
