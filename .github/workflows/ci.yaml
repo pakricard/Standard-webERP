@@ -23,9 +23,7 @@ jobs:
                       dbport: 3306
                     - php: '8.4'
                       dbtype: mariadb
-                      # Using 'native' version will result in the mysql service on the host to be used.
-                      # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
-                      dbversion: native
+                      dbversion: latest
                       operating-system: ubuntu-24.04
                       dbport: 3306
                     - php: '8.3'
