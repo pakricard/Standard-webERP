@@ -215,9 +215,16 @@ if (isset($_POST['Submit']) AND $InputError==False){
 			
 			// Add hard-coded options first
 			$SelectedRequested = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'REQUESTED_SS') ? 'selected="selected"' : '';
-			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS_SPG') ? 'selected="selected"' : '';
 			echo '<option value="REQUESTED_SS" ' . $SelectedRequested . '>' . __('Requested by Shop Support Team') . '</option>';
-			echo '<option value="OTHERS_SPG" ' . $SelectedOthers . '>' . __('Return by any other reason') . '</option>';
+
+			$SelectedDamagedPackaging = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'DAMAGED_PACKAGING') ? 'selected="selected"' : '';
+			echo '<option value="DAMAGED_PACKAGING" ' . $SelectedDamagedPackaging . '>' . __('Damaged Packaging') . '</option>';
+
+			$SelectedDamagedDisplay = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'DAMAGED_DISPLAY') ? 'selected="selected"' : '';
+			echo '<option value="DAMAGED_DISPLAY" ' . $SelectedDamagedDisplay . '>' . __('Damaged Display') . '</option>';
+
+			$SelectedOthers = (isset($_POST['ReasonReturn' . $i]) && $_POST['ReasonReturn' . $i] == 'OTHERS_SPG') ? 'selected="selected"' : '';
+			echo '<option value="OTHERS_SPG" ' . $SelectedOthers . '>' . __('Other reasons') . '</option>';
 			
 			// Get return reasons from database
 			$ReasonSQL = "SELECT servicecode,
@@ -255,8 +262,15 @@ if (isset($_POST['Submit']) AND $InputError==False){
 	
 	// Add hard-coded options first for new row
 	$SelectedRequestedNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'REQUESTED_SS') ? 'selected="selected"' : '';
-	$SelectedOthersNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'OTHERS_SPG') ? 'selected="selected"' : '';
 	echo '<option value="REQUESTED_SS" ' . $SelectedRequestedNew . '>' . __('Requested by Shop Support Team') . '</option>';
+
+	$SelectedDamagedPackagingNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'DAMAGED_PACKAGING') ? 'selected="selected"' : '';
+	echo '<option value="DAMAGED_PACKAGING" ' . $SelectedDamagedPackagingNew . '>' . __('Damaged Packaging') . '</option>';
+
+	$SelectedDamagedDisplayNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'DAMAGED_DISPLAY') ? 'selected="selected"' : '';
+	echo '<option value="DAMAGED_DISPLAY" ' . $SelectedDamagedDisplayNew . '>' . __('Damaged Display') . '</option>';
+
+	$SelectedOthersNew = (isset($_POST['ReasonReturn' . $j]) && $_POST['ReasonReturn' . $j] == 'OTHERS_SPG') ? 'selected="selected"' : '';
 	echo '<option value="OTHERS_SPG" ' . $SelectedOthersNew . '>' . __('Other reasons') . '</option>';
 	
 	// Get return reasons from database for new row
