@@ -964,6 +964,9 @@ function MaxRLCorrectionSomeModels($StockID, $loccode, $NewRL){
 **************************************************************************************************************/
 function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB){
 	if ($UpdateDB){
+		if ($NewRL < 0){
+			$NewRL = 0;
+		}
 		if ($OldRL != $NewRL){
 			if ($loccode == "ALL"){
 				$SQL = "UPDATE locstock

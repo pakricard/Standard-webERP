@@ -101,14 +101,16 @@ if (isset($_POST['Modify'])) {
 			$_SESSION['ForcePasswordChange'] = 0;
 		}
 		// Update the session variables to reflect user changes on-the-fly:
-		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
-		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.php but for completeness */
-		$Theme = $_SESSION['Theme'];
-		$_SESSION['Language'] = trim($_POST['Language']);
-		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
-		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
-		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
-		include($PathPrefix . 'includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		if ($KL_SystemAdmin) {
+			$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
+			$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.php but for completeness */
+			$Theme = $_SESSION['Theme'];
+			$_SESSION['Language'] = trim($_POST['Language']);
+			$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
+			$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
+			$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
+			include($PathPrefix . 'includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
+		}
 	}
 }
 

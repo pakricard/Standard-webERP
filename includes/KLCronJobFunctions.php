@@ -31,6 +31,7 @@ SetEndDatePriceToObsolete - Sets end date of prices to today for obsolete items
 SetObsoleteForCategoryWithoutStock - Marks items with zero stock in specific category as obsolete
 SetRLZeroForLocations - Sets reorder level to zero for specific locations
 SetRLZeroForObsolete - Sets reorder level to zero for obsolete items
+SetRLToIntegerPart - Truncates reorder level to its integer part when it is not an integer
 SetStatusCompleteToFinishedOldPurchaseOrders - Marks old purchase orders as complete
 SetTopSalesByGroup - Calculates top sales ranking for items in a specific group
 SetTopSalesRanking - Sets up and calculates sales performance rankings
@@ -136,7 +137,9 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 function KL_DailyCleanDB($ShowMessages, $EmailText){
 	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText);
 	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText);
+	$EmailText = SetRLZeroForRLNegative($ShowMessages, $EmailText);
 	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText);
+	$EmailText = SetRLToIntegerPart($ShowMessages, $EmailText);
 	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText);
 	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText);
 	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText);
@@ -465,6 +468,46 @@ function SetRLZeroForObsolete($ShowMessages, $EmailText){
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
+
+/**************************************************************************************************************
+* Sets reorder level to zero for negative items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
+function SetRLZeroForRLNegative($ShowMessages, $EmailText){
+	$SQL = "UPDATE locstock
+			SET reorderlevel = 0
+			WHERE reorderlevel < 0";
+	$ErrMsg =__('Could not set RL = 0 for negative RL because');
+	DB_query($SQL,$ErrMsg);
+	$Text = "RL updated to zero for negative RL.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
+
+/**************************************************************************************************************
+* Truncates reorder level to its integer part when it is not an integer
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
+function SetRLToIntegerPart($ShowMessages, $EmailText){
+	$SQL = "UPDATE locstock
+			SET reorderlevel = TRUNCATE(reorderlevel, 0)
+			WHERE reorderlevel <> TRUNCATE(reorderlevel, 0)";
+	$ErrMsg =__('Could not truncate RL to integer part because');
+	DB_query($SQL,$ErrMsg);
+	$Text = "RL truncated to integer part for non-integer values.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
 
 /**************************************************************************************************************
 * Sets reorder level to zero for specific locations

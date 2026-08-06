@@ -2085,6 +2085,12 @@ function GetItemTransferReason(string $Reason){
 	} elseif ($Reason == 'REQUESTED_SS'){
 		// from KLPOSReturnToKantor.php
 		return 'Requested by Shop Support from Shop';
+	} elseif ($Reason == 'DAMAGED_PACKAGING'){
+		// from KLPOSReturnToKantor.php
+		return 'Damaged Packaging';
+	} elseif ($Reason == 'DAMAGED_DISPLAY'){
+		// from KLPOSReturnToKantor.php
+		return 'Damaged Display';
 	} elseif ($Reason == 'SMART_NEEDED_BY_RL'){
 		// from KLSmartStockTransfers.php
 		return 'Daily Cron Job From Kantor Needed in Shop by Reorder Level';
