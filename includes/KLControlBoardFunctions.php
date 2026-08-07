@@ -4274,130 +4274,119 @@ function OpenCartOrdersByStatus($Status){
 }
 
 function InternalBankTransfers($Company, 
+							$SecondaryBanksMax,
 							$DanamonAccount, $DanamonMin, $DanamonMax, $DanamonOverExcess,
-							$MandiriAccount, $MandiriMin, $MandiriMax,
-							$BCAAccount, $BCAMin, $BCAMax,
-							$BNIAccount, $BNIMin, $BNIMax,
-							$BRIAccount, $BRIMin, $BRIMax,
+							$MandiriAccount, $MandiriMin, 
+							$BCAAccount, $BCAMin,
+							$BNIAccount, $BNIMin, 
+							$BRIAccount, $BRIMin, 
 							$OCBCAccount, $OCBCMin, $OCBCMax,
-							$TokopediaAccount, $TokopediaMin, $TokopediaMax, 
-							$ShopeeAccount, $ShopeeMin, $ShopeeMax, 
-							$MidtransAccount, $MidtransMin, $MidtransMax, 
+							$TokopediaAccount, $TokopediaMin,
+							$ShopeeAccount, $ShopeeMin,  
+							$MidtransAccount, $MidtransMin, 
 							$TransferBlockFromBank,
 							$TransferBlockFromOnline,
 							$Period){
 
 	$SaldoDanamon = GetGLAccountBalance($DanamonAccount, $Period);
-	if ($SaldoDanamon <= $DanamonMin){
-		// Danamon is below minimum balance... transfer from other banks until the Max Danamon
-		$TransferNeededDanamon = $DanamonMax - $SaldoDanamon;
+	
+	$SaldoSecundaryBanks = GetGLAccountBalance($MandiriAccount, $Period) + 
+						GetGLAccountBalance($BCAAccount, $Period) + 
+						GetGLAccountBalance($BNIAccount, $Period) + 
+						GetGLAccountBalance($BRIAccount, $Period) + 
+						GetGLAccountBalance($TokopediaAccount, $Period) +
+						GetGLAccountBalance($ShopeeAccount, $Period) + 
+						GetGLAccountBalance($MidtransAccount, $Period);
 
+	if ($SaldoSecundaryBanks > $SecondaryBanksMax){
+		// the PT has more money in secondary banks than max. Transfer to Danamon all the money
 		// let's check if we can transfer from any bank account in order of preference
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$TokopediaAccount, 
-															"Tokopedia",
-															$TokopediaMin, 
-															$TokopediaMax,
-															$TransferBlockFromOnline,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$TokopediaAccount, 
+										"Tokopedia",
+										$TokopediaMin, 
+										$TransferBlockFromOnline,
+										$Period
+										);
 		
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$ShopeeAccount, 
-															"Shopee",
-															$ShopeeMin, 
-															$ShopeeMax,
-															$TransferBlockFromOnline,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$ShopeeAccount, 
+										"Shopee",
+										$ShopeeMin, 
+										$TransferBlockFromOnline,
+										$Period
+										);
 
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$MidtransAccount, 
-															"Midtrans",
-															$MidtransMin, 
-															$MidtransMax,
-															$TransferBlockFromOnline,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$MidtransAccount, 
+										"Midtrans",
+										$MidtransMin, 
+										$TransferBlockFromOnline,
+										$Period
+										);
 		
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$MandiriAccount, 
-															"Mandiri",
-															$MandiriMin, 
-															$MandiriMax,
-															$TransferBlockFromBank,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$MandiriAccount, 
+										"Mandiri",
+										$MandiriMin, 
+										$TransferBlockFromBank,
+										$Period
+										);
 
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$BCAAccount, 
-															"BCA",
-															$BCAMin, 
-															$BCAMax,
-															$TransferBlockFromBank,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$BCAAccount, 
+										"BCA",
+										$BCAMin, 
+										$TransferBlockFromBank,
+										$Period
+										);
 
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$BNIAccount, 
-															"BNI",
-															$BNIMin, 
-															$BNIMax,
-															$TransferBlockFromBank,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$BNIAccount, 
+										"BNI",
+										$BNIMin, 
+										$TransferBlockFromBank,
+										$Period
+										);
 
-		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
-															$TransferNeededDanamon,
-															$BRIAccount, 
-															"BRI",
-															$BRIMin, 
-															$BRIMax,
-															$TransferBlockFromBank,
-															$Period
-															);
+		CalculateTransferFromBankToDanamon($Company, 
+										$BRIAccount, 
+										"BRI",
+										$BRIMin, 
+										$TransferBlockFromBank,
+										$Period
+										);
 
-	} elseif (($SaldoDanamon >= $DanamonOverExcess)){
-		// Danamon is over the excess balance... transfer from Danamon to OCBC for "cash storage"
-		$TransferExcessDanamon = $SaldoDanamon - $DanamonOverExcess;
+	}
+	
+	if (($SaldoDanamon >= $DanamonMax)){
+		// Danamon is over the max balance... transfer from Danamon to OCBC for "cash storage"
+		$TransferExcessDanamon = $SaldoDanamon - $DanamonMax;
 
-		$TransferExcessDanamon = CalculateExcessTransferFromDanamonToBank($Company, 
-															$TransferExcessDanamon,
-															"OCBC",
-															$TransferBlockFromBank
-															);
+		CalculateExcessTransferFromDanamonToBank($Company, 
+												$TransferExcessDanamon,
+												"OCBC",
+												$TransferBlockFromBank
+												);
 
 	}
 }
 
 function CalculateTransferFromBankToDanamon($Company, 
-											$TransferNeededDanamon,
 											$Account, 
 											$AccountName,
 											$SaldoMin, 
-											$SaldoMax,
 											$TransferBlock,
 											$Period){
-	if ($TransferNeededDanamon > 0){
-		$Saldo = GetGLAccountBalance($Account, $Period);
-		if ($Saldo >= $SaldoMax){
-			$AvailableForTransfer = $Saldo - $SaldoMin;
-			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);
-			$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
-			if ($Transfer > 0){
-				$WarningTitleText = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . " to Danamon ". $Company;
-   				ShowWarningTitle($WarningTitleText);
-				$TransferNeededDanamon = $TransferNeededDanamon - $Transfer;
-			}
-		} 
+
+	$Saldo = GetGLAccountBalance($Account, $Period);
+	$Transfer = $Saldo - $SaldoMin;
+	$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
+	if ($Transfer > 0){
+		$WarningTitleText = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . " to Danamon ". $Company;
+		ShowWarningTitle($WarningTitleText);
 	}
-	return $TransferNeededDanamon;
+	return $Transfer;
 }
 
 function CalculateExcessTransferFromDanamonToBank($Company, 
