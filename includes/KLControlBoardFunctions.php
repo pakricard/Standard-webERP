@@ -4297,11 +4297,11 @@ function InternalBankTransfers($Company,
 						GetGLAccountBalance($TokopediaAccount, $Period) +
 						GetGLAccountBalance($ShopeeAccount, $Period) + 
 						GetGLAccountBalance($MidtransAccount, $Period);
-
+	$TransferToDanamon = 0;
 	if ($SaldoSecundaryBanks > $SecondaryBanksMax){
 		// the PT has more money in secondary banks than max. Transfer to Danamon all the money
 		// let's check if we can transfer from any bank account in order of preference
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$TokopediaAccount, 
 										"Tokopedia",
 										$TokopediaMin, 
@@ -4309,7 +4309,7 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 		
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$ShopeeAccount, 
 										"Shopee",
 										$ShopeeMin, 
@@ -4317,7 +4317,7 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$MidtransAccount, 
 										"Midtrans",
 										$MidtransMin, 
@@ -4325,7 +4325,7 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 		
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$MandiriAccount, 
 										"Mandiri",
 										$MandiriMin, 
@@ -4333,7 +4333,7 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$BCAAccount, 
 										"BCA",
 										$BCAMin, 
@@ -4341,7 +4341,7 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$BNIAccount, 
 										"BNI",
 										$BNIMin, 
@@ -4349,18 +4349,19 @@ function InternalBankTransfers($Company,
 										$Period
 										);
 
-		CalculateTransferFromBankToDanamon($Company, 
+		$TransferToDanamon += CalculateTransferFromBankToDanamon($Company, 
 										$BRIAccount, 
 										"BRI",
 										$BRIMin, 
 										$TransferBlockFromBank,
 										$Period
 										);
-
 	}
 	
-	if (($SaldoDanamon >= $DanamonMax)){
-		// Danamon is over the max balance... transfer from Danamon to OCBC for "cash storage"
+	if (($SaldoDanamon >= $DanamonMax) and ($TransferToDanamon == 0)){
+		// Danamon is over the max balance... 
+		// and we have finished the transfers from secondary accounts to Danamon, 
+		// now transfer from Danamon to OCBC the extra for "cash storage"
 		$TransferExcessDanamon = $SaldoDanamon - $DanamonMax;
 
 		CalculateExcessTransferFromDanamonToBank($Company, 
