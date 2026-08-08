@@ -177,6 +177,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['InternalBankTransferSizeMultiple'] != $_POST['X_InternalBankTransferSizeMultiple'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_InternalBankTransferSizeMultiple']."' WHERE confname = 'InternalBankTransferSizeMultiple'";
 		}
+		if ($_SESSION['DepositoTransferSizeMultiple'] != $_POST['X_DepositoTransferSizeMultiple'] ) {
+			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_DepositoTransferSizeMultiple']."' WHERE confname = 'DepositoTransferSizeMultiple'";
+		}
 		if ($_SESSION['InternalOnlineTransferSizeMultiple'] != $_POST['X_InternalOnlineTransferSizeMultiple'] ) {
 			$SQL[] = "UPDATE klconfig SET confvalue = '".$_POST['X_InternalOnlineTransferSizeMultiple']."' WHERE confname = 'InternalOnlineTransferSizeMultiple'";
 		}
@@ -594,34 +597,53 @@ echo '<fieldset>
 	echo '</fieldset><br />';
 	echo '<fieldset>
 		<legend>' . __('Internal Bank Transfers Settings') . '</legend>';
-		echo FieldToSelectOneNumber('X_InternalBankTransferSizeMultiple', $_SESSION['InternalBankTransferSizeMultiple'], 15, 14, 'Internal banks transfer multiple size (IDR)', 'Internal banks transfer multiple size (IDR)', '', '150');
-		echo FieldToSelectOneNumber('X_InternalOnlineTransferSizeMultiple', $_SESSION['InternalOnlineTransferSizeMultiple'], 15, 14, 'Internal online transfer multiple size (IDR)', 'Internal online transfer multiple size (IDR)', '', '150');
+		echo FieldToSelectOneNumber('X_InternalBankTransferSizeMultiple', $_SESSION['InternalBankTransferSizeMultiple'], 15, 14, 'Internal Banks transfer multiple size (IDR)', 'Internal banks transfer multiple size (IDR)', '', '150');
+		echo FieldToSelectOneNumber('X_DepositoTransferSizeMultiple', $_SESSION['DepositoTransferSizeMultiple'], 15, 14, 'Minimum Deposito transfer multiple size (IDR)', 'Minimum Deposito transfer multiple size (IDR)', '', '150');
+		echo FieldToSelectOneNumber('X_InternalOnlineTransferSizeMultiple', $_SESSION['InternalOnlineTransferSizeMultiple'], 15, 14, 'Internal Online transfer multiple size (IDR)', 'Internal online transfer multiple size (IDR)', '', '150');
 		echo '<fieldset>
 			<legend>' . __('Internal PTADU Bank Transfers Settings') . '</legend>';
+			echo '<fieldset>
+				<legend>' . __('PTADU Danamon Main Account Settings') . '</legend>';
 				echo FieldToSelectOneNumber('X_PTADUDanamonMinSaldo', $_SESSION['PTADUDanamonMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Danamon PTADU (IDR)', 'Minimum Saldo to be kept in Danamon PTADU (IDR)', '', '150');
 				echo FieldToSelectOneNumber('X_PTADUDanamonMaxSaldo', $_SESSION['PTADUDanamonMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Danamon PTADU (IDR)', 'Maximum Saldo to be kept in Danamon PTADU (IDR)', '', '151');
-				echo FieldToSelectOneNumber('X_PTADUSecondaryBanksMax', $_SESSION['PTADUSecondaryBanksMax'], 15, 14, 'Total balance for secondary banks for PTADU (IDR)', 'Total balance for secondary banks for PTADU (IDR)', '', '151');
+			echo '</fieldset><br />';
+			echo '<fieldset>
+				<legend>' . __('PTADU Secondary Accounts Settings') . '</legend>';
+				echo FieldToSelectOneNumber('X_PTADUSecondaryBanksMax', $_SESSION['PTADUSecondaryBanksMax'], 15, 14, 'Maximum balance for secondary banks for PTADU (IDR)', 'Total balance for secondary banks for PTADU (IDR)', '', '151');
 				echo FieldToSelectOneNumber('X_PTADUMandiriMinSaldo', $_SESSION['PTADUMandiriMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Mandiri PTADU (IDR)', 'Minimum Saldo to be kept in Mandiri PTADU (IDR)', '', '153');
 				echo FieldToSelectOneNumber('X_PTADUBCAMinSaldo', $_SESSION['PTADUBCAMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BCA PTADU (IDR)', 'Minimum Saldo to be kept in BCA PTADU (IDR)', '', '155');
 				echo FieldToSelectOneNumber('X_PTADUBNIMinSaldo', $_SESSION['PTADUBNIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BNI PTADU (IDR)', 'Minimum Saldo to be kept in BNI PTADU (IDR)', '', '157');
 				echo FieldToSelectOneNumber('X_PTADUBRIMinSaldo', $_SESSION['PTADUBRIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BRI PTADU (IDR)', 'Minimum Saldo to be kept in BRI PTADU (IDR)', '', '159');
-				echo FieldToSelectOneNumber('X_PTADUOCBCMinSaldo', $_SESSION['PTADUOCBCMinSaldo'], 15, 14, 'Minimum Saldo to be kept in OCBC PTADU (IDR)', 'Minimum Saldo to be kept in OCBC PTADU (IDR)', '', '161');
-				echo FieldToSelectOneNumber('X_PTADUOCBCMaxSaldo', $_SESSION['PTADUOCBCMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in OCBC PTADU (IDR)', 'Maximum Saldo to be kept in OCBC PTADU (IDR)', '', '162');
 				echo FieldToSelectOneNumber('X_PTADUTokopediaMinSaldo', $_SESSION['PTADUTokopediaMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Tokopedia PTADU (IDR)', 'Minimum Saldo to be kept in Tokopedia PTADU (IDR)', '', '163');
 				echo FieldToSelectOneNumber('X_PTADUShopeeMinSaldo', $_SESSION['PTADUShopeeMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Shopee PTADU (IDR)', 'Minimum Saldo to be kept in Shopee PTADU (IDR)', '', '165');
 				echo FieldToSelectOneNumber('X_PTADUMidtransMinSaldo', $_SESSION['PTADUMidtransMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Midtrans PTADU (IDR)', 'Minimum Saldo to be kept in Midtrans PTADU (IDR)', '', '167');
+			echo '</fieldset><br />';
+			echo '<fieldset>
+				<legend>' . __('PTADU OCBC Account Settings') . '</legend>';
+				echo FieldToSelectOneNumber('X_PTADUOCBCMinSaldo', $_SESSION['PTADUOCBCMinSaldo'], 15, 14, 'Minimum Saldo to be kept in OCBC PTADU (IDR)', 'Minimum Saldo to be kept in OCBC PTADU (IDR)', '', '161');
+				echo FieldToSelectOneNumber('X_PTADUOCBCMaxSaldo', $_SESSION['PTADUOCBCMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in OCBC PTADU (IDR)', 'Maximum Saldo to be kept in OCBC PTADU (IDR)', '', '162');
+			echo '</fieldset><br />';
 		echo '</fieldset><br />';
 		echo '<fieldset>
 			<legend>' . __('Internal PTSMH Bank Transfers Settings') . '</legend>';
+			echo '<fieldset>
+				<legend>' . __('PTSMH Danamon Main Account Settings') . '</legend>';
 				echo FieldToSelectOneNumber('X_PTSMHDanamonMinSaldo', $_SESSION['PTSMHDanamonMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Danamon PTSMH (IDR)', 'Minimum Saldo to be kept in Danamon PTSMH (IDR)', '', '150');
 				echo FieldToSelectOneNumber('X_PTSMHDanamonMaxSaldo', $_SESSION['PTSMHDanamonMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in Danamon PTSMH (IDR)', 'Maximum Saldo to be kept in Danamon PTSMH (IDR)', '', '151');
-				echo FieldToSelectOneNumber('X_PTSMHSecondaryBanksMax', $_SESSION['PTSMHSecondaryBanksMax'], 15, 14, 'Total balance for secondary banks for PTSMH (IDR)', 'Total balance for secondary banks for PTSMH (IDR)', '',	'151');
+			echo '</fieldset><br />';
+			echo '<fieldset>
+				<legend>' . __('PTSMH Secondary Accounts Settings') . '</legend>';
+				echo FieldToSelectOneNumber('X_PTSMHSecondaryBanksMax', $_SESSION['PTSMHSecondaryBanksMax'], 15, 14, 'Maximum balance for secondary banks for PTSMH (IDR)', 'Total balance for secondary banks for PTSMH (IDR)', '',	'151');
 				echo FieldToSelectOneNumber('X_PTSMHMandiriMinSaldo', $_SESSION['PTSMHMandiriMinSaldo'], 15, 14, 'Minimum Saldo to be kept in Mandiri PTSMH (IDR)', 'Minimum Saldo to be kept in Mandiri PTSMH (IDR)', '', '153');
 				echo FieldToSelectOneNumber('X_PTSMHBCAMinSaldo', $_SESSION['PTSMHBCAMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BCA PTSMH (IDR)', 'Minimum Saldo to be kept in BCA PTSMH (IDR)', '', '155');
 				echo FieldToSelectOneNumber('X_PTSMHBNIMinSaldo', $_SESSION['PTSMHBNIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BNI PTSMH (IDR)', 'Minimum Saldo to be kept in BNI PTSMH (IDR)', '', '157');
 				echo FieldToSelectOneNumber('X_PTSMHBRIMinSaldo', $_SESSION['PTSMHBRIMinSaldo'], 15, 14, 'Minimum Saldo to be kept in BRI PTSMH (IDR)', 'Minimum Saldo to be kept in BRI PTSMH (IDR)', '', '159');
+			echo '</fieldset><br />';
+			echo '<fieldset>
+				<legend>' . __('PTSMH OCBC Account Settings') . '</legend>';
 				echo FieldToSelectOneNumber('X_PTSMHOCBCMinSaldo', $_SESSION['PTSMHOCBCMinSaldo'], 15, 14, 'Minimum Saldo to be kept in OCBC PTSMH (IDR)', 'Minimum Saldo to be kept in OCBC PTSMH (IDR)', '', '161');
 				echo FieldToSelectOneNumber('X_PTSMHOCBCMaxSaldo', $_SESSION['PTSMHOCBCMaxSaldo'], 15, 14, 'Maximum Saldo to be kept in OCBC PTSMH (IDR)', 'Maximum Saldo to be kept in OCBC PTSMH (IDR)', '', '162');
+			echo '</fieldset><br />';
 		echo '</fieldset><br />';
 
 	echo '</fieldset><br />';

@@ -405,7 +405,7 @@ if ($ProcessSection01){
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTADU", 
 					$_SESSION['PTADUSecondaryBanksMax'],
-					"111121105AD", $_SESSION['PTADUDanamonMinSaldo'], $_SESSION['PTADUDanamonMaxSaldo'], $_SESSION['PTADUDanamonOverExcessSaldo'],
+					"111121105AD", $_SESSION['PTADUDanamonMinSaldo'], $_SESSION['PTADUDanamonMaxSaldo'],
 					"111121101AD", $_SESSION['PTADUMandiriMinSaldo'], 
 					"111121110AD", $_SESSION['PTADUBCAMinSaldo'],
 					"111121115AD", $_SESSION['PTADUBNIMinSaldo'],
@@ -416,6 +416,7 @@ if ($ProcessSection01){
 					"111121125AD", $_SESSION['PTADUMidtransMinSaldo'],
 					$_SESSION['InternalBankTransferSizeMultiple'],
 					$_SESSION['InternalOnlineTransferSizeMultiple'],
+					$_SESSION['DepositoTransferSizeMultiple'],
 					$PeriodNow);	
 		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -423,7 +424,7 @@ if ($ProcessSection01){
 		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
 					$_SESSION['PTSMHSecondaryBanksMax'],
-					"111121105SM", $_SESSION['PTSMHDanamonMinSaldo'], $_SESSION['PTSMHDanamonMaxSaldo'], $_SESSION['PTSMHDanamonOverExcessSaldo'],
+					"111121105SM", $_SESSION['PTSMHDanamonMinSaldo'], $_SESSION['PTSMHDanamonMaxSaldo'],
 					"111121100SM", $_SESSION['PTSMHMandiriMinSaldo'], 
 					"111121110SM", $_SESSION['PTSMHBCAMinSaldo'], 
 					"111121115SM", $_SESSION['PTSMHBNIMinSaldo'], 
@@ -434,6 +435,7 @@ if ($ProcessSection01){
 					"", 0,
 					$_SESSION['InternalBankTransferSizeMultiple'],
 					0,
+					$_SESSION['DepositoTransferSizeMultiple'],
 					$PeriodNow);	
 		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -456,7 +458,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+/*	if ($KL_SystemAdmin){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121101AD',
 									'111121105AD',
@@ -492,7 +494,7 @@ if ($ProcessSection01){
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
-
+*/
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationLeader){
 		$StartTime = microtime(true);
@@ -510,7 +512,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+/*	if ($KL_SystemAdmin){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
@@ -520,9 +522,8 @@ if ($ProcessSection01){
 									'111121117SM')", "Total Banks PT SMH", $_SESSION['TotalBanksSMHMin'], $_SESSION['TotalBanksSMHMax'], $PeriodNow);
 		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-
 	}
-	
+*/	
 	if ($KL_SystemAdmin){
 		$StartTime = microtime(true);
 		BalanceListAccountControl("('111131100', 
