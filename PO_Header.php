@@ -268,7 +268,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 	$_SESSION['PO' . $identifier]->SuppDelAdd5 = $_POST['SuppDelAdd5'];
 	$_SESSION['PO' . $identifier]->SuppTel = $_POST['SuppTel'];
 	$_SESSION['PO' . $identifier]->Initiator = $_POST['Initiator'];
-	$_SESSION['PO' . $identifier]->RequisitionNo = $_POST['Requisition'];
+	$_SESSION['PO' . $identifier]->RequisitionNo = $_POST['Requisition'] ?? '';
 	$_SESSION['PO' . $identifier]->Version = $_POST['Version'];
 	$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = $_POST['KLAgreedDeliveryDate'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = $_POST['DeliveryDate'];
@@ -278,7 +278,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 	$_SESSION['PO' . $identifier]->KLShipmentAWB = $_POST['KLShipmentAWB'];
 	$_SESSION['PO' . $identifier]->KLCustomsDate = $_POST['KLCustomsDate'];
 	$_SESSION['PO' . $identifier]->KLArrivalDate = $_POST['KLArrivalDate'];
-	$_SESSION['PO' . $identifier]->Revised = $_POST['Revised'];
+	$_SESSION['PO' . $identifier]->Revised = $_POST['Revised'] ?? '';
 	$_SESSION['PO' . $identifier]->ExRate = filter_number_format($_POST['ExRate']);
 	$_SESSION['PO' . $identifier]->Comments = $_POST['Comments'];
 	$_SESSION['PO' . $identifier]->DeliveryBy = $_POST['DeliveryBy'];
