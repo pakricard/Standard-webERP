@@ -379,7 +379,7 @@ if (!isset($SelectedUser)) {
 				<th class="SortedColumn">', __('Timeout'), '</th>
 				<th class="SortedColumn">', __('Last Visit'), '</th>
 				<th class="SortedColumn">', __('User Role'), '</th>
-				<th class="noPrint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">', __('Action'), '</th>
 			</tr>
 		</thead>
 		<tbody>';

@@ -65,10 +65,18 @@ Returns:
     float - The calculated balance for the account up to the specified period, or 0 if no records found
 */
 function GetGLAccountBalance(string|int $AccountCode, int $PeriodNo): float|int {
+	$SQLCheck = "SELECT accountcode
+				FROM chartmaster
+				WHERE accountcode = '" . $AccountCode . "'";
+	$CheckResult = DB_query($SQLCheck);
+	if (DB_num_rows($CheckResult) == 0) {
+		return 0;
+	}
+
 	$SQL = "SELECT SUM(amount) AS total
 			FROM gltotals
 			WHERE account = '" . $AccountCode . "'
-				AND period <= ". $PeriodNo . "";
+				AND period <= '" . $PeriodNo . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return ($MyRow['total'] ?? 0);
