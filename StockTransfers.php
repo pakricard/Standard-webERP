@@ -161,15 +161,16 @@ if ($NewTransfer) {
 		prnMsg( __('Unable to locate Stock Code').' '.mb_strtoupper($_POST['StockID']), 'error' );
 	} elseif (DB_num_rows($Result)>0) {
 		$MyRow = DB_fetch_array($Result);
-		$_SESSION['Transfer']->TransferItem[0] = new LineItem(	trim(mb_strtoupper($_POST['StockID'])),
+		$Quantity = isset($_POST['Quantity']) ? filter_number_format($_POST['Quantity']) : 0;
+
+		$_SESSION['Transfer']->TransferItem[0] = new LineItem(trim(mb_strtoupper($_POST['StockID'])),
 															$MyRow['description'],
-						 									filter_number_format($_POST['Quantity']),
+															$Quantity,
 															$MyRow['units'],
 															$MyRow['controlled'],
 															$MyRow['serialised'],
 															$MyRow['perishable'],
 															$MyRow['decimalplaces']);
-
 
 		$_SESSION['Transfer']->TransferItem[0]->StandardCost = $MyRow['standardcost'];
 

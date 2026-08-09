@@ -609,7 +609,7 @@ else {
 		$_SESSION['PO' . $identifier]->SuppDelAdd6 = $_POST['SuppDelAdd6'];
 		$_SESSION['PO' . $identifier]->SuppTel = $_POST['SuppTel'];
 		$_SESSION['PO' . $identifier]->Port = $_POST['Port'];
-		$_SESSION['PO' . $Identifier]->DeliveryBy = $_POST['DeliveryBy'];
+		$_SESSION['PO' . $identifier]->DeliveryBy = $_POST['DeliveryBy'];
 		// end of added for suppliers lookup fields
 
 	}
