@@ -602,10 +602,12 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '
 	  </p>';
 
+$ReasonValue = $_POST['Reason'] ?? '';
+
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 // KL RICARD
-echo '<input type="hidden" name="Reason" value="' . $_POST['Reason'] . '" />';
+echo '<input type="hidden" name="Reason" value="' . htmlspecialchars($ReasonValue, ENT_QUOTES, 'UTF-8') . '" />';
 
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -716,7 +718,7 @@ if (isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 //KL RICARD Added Reason
 echo '<field>
         <label for="Reason">' . __('Reason') . ':</label>
-        <input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" />
+        <input type="text" name="Reason" size="51" value="' . htmlspecialchars($ReasonValue, ENT_QUOTES, 'UTF-8') . '" maxlength="80" />
         <fieldhelp>' . __('Enter the reason for this stock transfer') . '</fieldhelp>
     </field>';
 // KL RICARD End
