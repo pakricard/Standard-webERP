@@ -494,6 +494,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								+ $_POST['AmountPaidAmexBRI']
 								+ $_POST['AmountPaidWeChat']
 								+ $_POST['AmountPaidQRISMandiri']
+								+ $_POST['AmountPaidQRISBCA']
+								+ $_POST['AmountPaidQRISBNI']
 								+ $_POST['AmountPaidQRISBRI'];
 
 	$TotalFromCustomer = $TotalReceivedCash
@@ -557,6 +559,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidQRISMandiri'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidQRISBCA'] != 0) {
+		$PaymentSystemsUsed++;
+	}
+	if ($_POST['AmountPaidQRISBNI'] != 0) {
 		$PaymentSystemsUsed++;
 	}
 	if ($_POST['AmountPaidQRISBRI'] != 0) {
@@ -1700,6 +1708,70 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['Items' . $identifier]->DebtorNo);
 		}//amount paid QRIS MANDIRI was not zero
 
+		if ($_POST['AmountPaidQRISBCA'] != 0) {
+			// if customer paid with QRIS BCA
+			$QRISBankComissions = round($_POST['AmountPaidQRISBCA'] * ($_SESSION['ComissionQRISBCA']) / 100);
+			$QRISNetPayment = $_POST['AmountPaidQRISBCA'] - $QRISBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountQRISBCA'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBCA'],
+								$QRISBankComissions,
+								$QRISNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionQRIS'],
+								$_SESSION['SettlementDelayQRISBCA'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountQRISBCA'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBCA'],
+								$QRISNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid QRIS BCA was not zero
+
+		if ($_POST['AmountPaidQRISBNI'] != 0) {
+			// if customer paid with QRIS BNI
+			$QRISBankComissions = round($_POST['AmountPaidQRISBNI'] * ($_SESSION['ComissionQRISBNI']) / 100);
+			$QRISNetPayment = $_POST['AmountPaidQRISBNI'] - $QRISBankComissions;
+
+			$ReceiptNumber = AccountPaymentRetail(PAYMENT_BY_CREDITCARD,
+								$_SESSION['AccountQRISBNI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBNI'],
+								$QRISBankComissions,
+								$QRISNetPayment,
+								$Tag,
+								$_SESSION['AccountComissionQRIS'],
+								$_SESSION['SettlementDelayQRISBNI'],
+								$ExRate);
+
+			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
+								PAYMENT_BY_CREDITCARD,
+								$PeriodNo,
+								$_SESSION['AccountQRISBNI'],
+								$InvoiceNo,
+								$_SESSION['Items' . $identifier]->CustRef,
+								$_POST['AmountPaidQRISBNI'],
+								$QRISNetPayment,
+								$ExRate,
+								$DebtorTransID,
+								$OrderNo,
+								$_SESSION['Items' . $identifier]->DefaultCurrency,
+								$_SESSION['Items' . $identifier]->DebtorNo);
+		}//amount paid QRIS BNI was not zero
+
 		if ($_POST['AmountPaidQRISBRI'] != 0) {
 			// if customer paid with QRIS BRI
 			$QRISBankComissions = round($_POST['AmountPaidQRISBRI'] * ($_SESSION['ComissionQRISBRI']) / 100);
@@ -1841,6 +1913,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		}
 		if ($_POST['AmountPaidQRISMandiri'] > 0) {
 			echo '<tr><td>' . __('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRISMandiri'], 0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidQRISBCA'] > 0) {
+			echo '<tr><td>' . __('Payment QRIS BCA') . ':</td> <td>' . number_format($_POST['AmountPaidQRISBCA'], 0) . '</td></tr>';
+		}
+		if ($_POST['AmountPaidQRISBNI'] > 0) {
+			echo '<tr><td>' . __('Payment QRIS BNI') . ':</td> <td>' . number_format($_POST['AmountPaidQRISBNI'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidQRISBRI'] > 0) {
 			echo '<tr><td>' . __('Payment QRIS BRI') . ':</td> <td>' . number_format($_POST['AmountPaidQRISBRI'], 0) . '</td></tr>';

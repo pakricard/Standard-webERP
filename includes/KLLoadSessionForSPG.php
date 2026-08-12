@@ -67,6 +67,12 @@ if (($KL_SPGSeniorOrSupport or $KL_SPGJunior)
 				krp.accountqrismandiri,
 				krp.comissionqrismandiri,
 				krp.settlementdelayqrismandiri,
+				krp.accountqrisbca,
+				krp.comissionqrisbca,
+				krp.settlementdelayqrisbca,
+				krp.accountqrisbni,
+				krp.comissionqrisbni,
+				krp.settlementdelayqrisbni,
 				krp.accountqrisbri,
 				krp.comissionqrisbri,
 				krp.settlementdelayqrisbri,
@@ -185,6 +191,12 @@ if (($KL_SPGSeniorOrSupport or $KL_SPGJunior)
 		$_SESSION['AccountQRISMandiri'] = $MyRow['accountqrismandiri'];
 		$_SESSION['ComissionQRISMandiri'] = $MyRow['comissionqrismandiri'];
 		$_SESSION['SettlementDelayQRISMandiri'] = $MyRow['settlementdelayqrismandiri'];
+		$_SESSION['AccountQRISBCA'] = $MyRow['accountqrisbca'];
+		$_SESSION['ComissionQRISBCA'] = $MyRow['comissionqrisbca'];
+		$_SESSION['SettlementDelayQRISBCA'] = $MyRow['settlementdelayqrisbca'];
+		$_SESSION['AccountQRISBNI'] = $MyRow['accountqrisbni'];
+		$_SESSION['ComissionQRISBNI'] = $MyRow['comissionqrisbni'];
+		$_SESSION['SettlementDelayQRISBNI'] = $MyRow['settlementdelayqrisbni'];
 		$_SESSION['AccountQRISBRI'] = $MyRow['accountqrisbri'];
 		$_SESSION['ComissionQRISBRI'] = $MyRow['comissionqrisbri'];
 		$_SESSION['SettlementDelayQRISBRI'] = $MyRow['settlementdelayqrisbri'];

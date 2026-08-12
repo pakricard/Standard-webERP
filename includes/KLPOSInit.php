@@ -50,6 +50,12 @@ if (!isset($_POST['AmountPaidWeChat'])){
 if (!isset($_POST['AmountPaidQRISMandiri'])){
 	$_POST['AmountPaidQRISMandiri'] = 0;
 }
+if (!isset($_POST['AmountPaidQRISBCA'])){
+	$_POST['AmountPaidQRISBCA'] = 0;
+}
+if (!isset($_POST['AmountPaidQRISBNI'])){
+	$_POST['AmountPaidQRISBNI'] = 0;
+}
 if (!isset($_POST['AmountPaidQRISBRI'])){
 	$_POST['AmountPaidQRISBRI'] = 0;
 }
