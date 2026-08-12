@@ -14,20 +14,25 @@ RelativeChange() - Calculates the relative change between selected and previous 
 /**
 Inserts tags into the GL tags table for a journal line
 Parameters:
-    array|null $TagArray - Array of tag references to be inserted
+    array|int|null $TagArray - Array of tag references to be inserted, or a single tag integer
 Returns:
     boolean - Always returns true
 */
-function InsertGLTags(?array $TagArray): bool {
-	if (!empty($TagArray)) {
-		$ErrMsg = __('Cannot insert a GL tag for the journal line because');
-		foreach ($TagArray as $Tag) {
-			$SQL = "INSERT INTO gltags
-					VALUES ( LAST_INSERT_ID(),
-							'" . $Tag . "')";
-			$Result = DB_query($SQL, $ErrMsg, '', true);
+function InsertGLTags(array|int|null $TagArray): bool {
+    if (!empty($TagArray)) {
+        if (!is_array($TagArray)) {
+            $TagArray = array($TagArray);
         }
-	}
+        $ErrMsg = __('Cannot insert a GL tag for the journal line because');
+        foreach ($TagArray as $Tag) {
+            if (!empty($Tag)) {
+                $SQL = "INSERT INTO gltags
+                        VALUES ( LAST_INSERT_ID(),
+                                '" . $Tag . "')";
+                $Result = DB_query($SQL, $ErrMsg, '', true);
+            }
+        }
+    }
     return true;
 }
 
