@@ -1115,6 +1115,12 @@ function KLPrintReceiptShopFooter(): string {
 	if ($_POST['AmountPaidQRISMandiri'] > 0){
 		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRISMandiri'], 0) . $NewLine;
 	}
+	if ($_POST['AmountPaidQRISBCA'] > 0){
+		$TextToPrint .= 'Paid QRIS BCA: ' . number_format($_POST['AmountPaidQRISBCA'], 0) . $NewLine;
+	}
+	if ($_POST['AmountPaidQRISBNI'] > 0){
+		$TextToPrint .= 'Paid QRIS BNI: ' . number_format($_POST['AmountPaidQRISBNI'], 0) . $NewLine;
+	}
 	if ($_POST['AmountPaidQRISBRI'] > 0){
 		$TextToPrint .= 'Paid QRIS BRI: ' . number_format($_POST['AmountPaidQRISBRI'], 0) . $NewLine;
 	}

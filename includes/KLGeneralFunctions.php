@@ -1980,6 +1980,8 @@ function ChangeGLAccountCode(string $NewGL, string $OldGL) {
 		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountqrismandiri", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqrisbca", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqrisbni", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountqrisbri", $OldGL, $NewGL);
 
 		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);

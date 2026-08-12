@@ -425,6 +425,8 @@ function EmailAllPaymentsDetails(){
 			'Total Amex EDC BRI      : ' . number_format($_POST['AmountPaidAmexBRI'], 0) . "\r\n" .
 			'Total WeChat/Alipay     : ' . number_format($_POST['AmountPaidWeChat'], 0) . "\r\n" .
 			'Total QRIS Mandiri      : ' . number_format($_POST['AmountPaidQRISMandiri'], 0) . "\r\n" .
+			'Total QRIS BCA          : ' . number_format($_POST['AmountPaidQRISBCA'], 0) . "\r\n" .
+			'Total QRIS BNI          : ' . number_format($_POST['AmountPaidQRISBNI'], 0) . "\r\n" .
 			'Total QRIS BRI          : ' . number_format($_POST['AmountPaidQRISBRI'], 0) . "\r\n" .
 			'Total Returned Goods    : ' . number_format($_POST['AmountReturnedGoods'], 0) . "\r\n" .
 			'Total Voucher/Discount  : ' . number_format($_POST['AmountVouchers'], 0) . "\r\n";

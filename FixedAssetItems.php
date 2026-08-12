@@ -166,12 +166,12 @@ if (isset($_POST['submit'])) {
 		OR filter_number_format($_POST['DepnRate'])<0){
 
 		$InputError = 1;
-		prnMsg(__('The depreciation rate is expected to be a number between 0 and 100'),'error');
+		prnMsg(__('The yearly depreciation rate is expected to be a number between 0 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
 	}
 	if (filter_number_format($_POST['DepnRate'])>0 AND filter_number_format($_POST['DepnRate'])<1){
-		prnMsg(__('Numbers less than 1 are interpreted as less than 1%. The depreciation rate should be entered as a number between 0 and 100'),'warn');
+		prnMsg(__('Numbers less than 1 are interpreted as less than 1%. The yearly depreciation rate should be entered as a number between 0 and 100'),'warn');
 	}
 
 
@@ -710,7 +710,7 @@ if ($_POST['DepnType']==0){ //straight line
 
 echo '</select></field>
 	<field>
-		<label>' . __('Depreciation Rate') . ':</label>
+		<label>' . __('Yearly Depreciation Rate') . ':</label>
 		<input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror number"' : 'class="number"' ) .'  type="text" name="DepnRate" size="5" maxlength="5" value="' . $_POST['DepnRate'] . '" />%
 	</field>
 	</fieldset>';

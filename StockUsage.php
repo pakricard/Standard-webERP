@@ -36,29 +36,35 @@ $Result = DB_query("SELECT description,
 						decimalplaces
 					FROM stockmaster
 					WHERE stockid='".$StockID."'");
-$MyRow = DB_fetch_row($Result);
 
-$DecimalPlaces = $MyRow[3];
-
+                    
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 
-$Its_A_KitSet_Assembly_Or_Dummy =false;
-if ($MyRow[2]=='K'
-	OR $MyRow[2]=='A'
-	OR $MyRow[2]=='D') {
+if (DB_num_rows($Result) > 0) {
+    $MyRow = DB_fetch_row($Result);
 
-	$Its_A_KitSet_Assembly_Or_Dummy =true;
-	echo '<h3>' . $StockID . ' - ' . $MyRow[0] . '</h3>';
+    $DecimalPlaces = $MyRow[3];
 
-	prnMsg( __('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . __('Please select a different item'),'warn');
+    $Its_A_KitSet_Assembly_Or_Dummy =false;
+    if ($MyRow[2]=='K'
+	    OR $MyRow[2]=='A'
+    	OR $MyRow[2]=='D') {
 
-	$StockID = '';
+	    $Its_A_KitSet_Assembly_Or_Dummy =true;
+	    echo '<h3>' . $StockID . ' - ' . $MyRow[0] . '</h3>';
+
+	    prnMsg( __('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . __('Please select a different item'),'warn');
+
+	    $StockID = '';
+    } else {
+	    echo '<legend>
+	    		' . __('Item') . ' : ' . $StockID . ' - ' . $MyRow[0] . '   (' . __('in units of') . ' : ' . $MyRow[1] . ')
+	    	</legend>';
+    }
 } else {
-	echo '<legend>
-			' . __('Item') . ' : ' . $StockID . ' - ' . $MyRow[0] . '   (' . __('in units of') . ' : ' . $MyRow[1] . ')
-		</legend>';
+    echo '<legend>' . __('Search for a Stock Item') . '</legend>';
 }
 
 echo '<field>
@@ -144,7 +150,7 @@ if (isset($_POST['ShowUsage'])){
 	$ErrMsg = __('The stock usage for the selected criteria could not be retrieved');
 	$MovtsResult = DB_query($SQL, $ErrMsg);
 
-	echo '<table class="selection">
+	echo '<br /><table class="selection">
 			<thead>
 				<tr>
 					<th>' . __('Month') . '</th>

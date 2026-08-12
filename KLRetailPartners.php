@@ -99,6 +99,12 @@ if (isset($_POST['submit'])) {
 					accountqrismandiri = '" . $_POST['AccountQRISMandiri'] . "',
 					comissionqrismandiri = '" . $_POST['ComissionQRISMandiri'] . "',
 					settlementdelayqrismandiri = '" . filter_number_format($_POST['SettlementDelayQRISMandiri']) . "',
+					accountqrisbca = '" . $_POST['AccountQRISBCA'] . "',
+					comissionqrisbca = '" . $_POST['ComissionQRISBCA'] . "',
+					settlementdelayqrisbca = '" . filter_number_format($_POST['SettlementDelayQRISBCA']) . "',
+					accountqrisbni = '" . $_POST['AccountQRISBNI'] . "',
+					comissionqrisbni = '" . $_POST['ComissionQRISBNI'] . "',
+					settlementdelayqrisbni = '" . filter_number_format($_POST['SettlementDelayQRISBNI']) . "',
 					accountqrisbri = '" . $_POST['AccountQRISBRI'] . "',
 					comissionqrisbri = '" . $_POST['ComissionQRISBRI'] . "',
 					settlementdelayqrisbri = '" . filter_number_format($_POST['SettlementDelayQRISBRI']) . "'
@@ -184,6 +190,14 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ComissionQRISMandiri']);
 		unset($_POST['SettlementDelayQRISMandiri']);
 
+		unset($_POST['AccountQRISBCA']);
+		unset($_POST['ComissionQRISBCA']);
+		unset($_POST['SettlementDelayQRISBCA']);
+
+		unset($_POST['AccountQRISBNI']);
+		unset($_POST['ComissionQRISBNI']);
+		unset($_POST['SettlementDelayQRISBNI']);
+
 		unset($_POST['AccountQRISBRI']);
 		unset($_POST['ComissionQRISBRI']);
 		unset($_POST['SettlementDelayQRISBRI']);
@@ -255,6 +269,12 @@ if (isset($_POST['submit'])) {
 								accountqrismandiri,
 								comissionqrismandiri,
 								settlementdelayqrismandiri,
+								accountqrisbca,
+								comissionqrisbca,
+								settlementdelayqrisbca,
+								accountqrisbni,
+								comissionqrisbni,
+								settlementdelayqrisbni,
 								accountqrisbri,
 								comissionqrisbri,
 								settlementdelayqrisbri)
@@ -320,6 +340,12 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['AccountQRISMandiri'] . "',
 								'" . $_POST['ComissionQRISMandiri'] . "',
 								'" . filter_number_format($_POST['SettlementDelayQRISMandiri']) . "',
+								'" . $_POST['AccountQRISBCA'] . "',
+								'" . $_POST['ComissionQRISBCA'] . "',
+								'" . filter_number_format($_POST['SettlementDelayQRISBCA']) . "',
+								'" . $_POST['AccountQRISBNI'] . "',
+								'" . $_POST['ComissionQRISBNI'] . "',
+								'" . filter_number_format($_POST['SettlementDelayQRISBNI']) . "',
 								'" . $_POST['AccountQRISBRI'] . "',
 								'" . $_POST['ComissionQRISBRI'] . "',
 								'" . filter_number_format($_POST['SettlementDelayQRISBRI']) . 
@@ -409,6 +435,14 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ComissionQRISMandiri']);
 		unset($_POST['SettlementDelayQRISMandiri']);
 
+		unset($_POST['AccountQRISBCA']);
+		unset($_POST['ComissionQRISBCA']);
+		unset($_POST['SettlementDelayQRISBCA']);
+
+		unset($_POST['AccountQRISBNI']);
+		unset($_POST['ComissionQRISBNI']);
+		unset($_POST['SettlementDelayQRISBNI']);
+
 		unset($_POST['AccountQRISBRI']);
 		unset($_POST['ComissionQRISBRI']);
 		unset($_POST['SettlementDelayQRISBRI']);
@@ -458,6 +492,8 @@ or deletion of the records*/
 				comissionccbri,
 				comissionamexbri,
 				comissionqrismandiri,
+				comissionqrisbca,
+				comissionqrisbni,
 				comissionqrisbri,
 				percentconsignmentptadu
 			FROM klretailpartners
@@ -479,7 +515,7 @@ or deletion of the records*/
 				<th colspan="2">', __('Mandiri'), '</th>
 				<th colspan="2">', __('BCA'), '</th>
 				<th colspan="2">', __('BRI'), '</th>
-				<th colspan="2">', __('QRIS'), '</th>
+				<th colspan="4">', __('QRIS'), '</th>
 				<th>', __('Consignment'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
@@ -498,6 +534,8 @@ or deletion of the records*/
 				<th class="SortedColumn">', __('CC'), '</th>
 				<th class="SortedColumn">', __('AMEX'), '</th>
 				<th class="SortedColumn">', __('Mandiri'), '</th>
+				<th class="SortedColumn">', __('BCA'), '</th>
+				<th class="SortedColumn">', __('BNI'), '</th>
 				<th class="SortedColumn">', __('BRI'), '</th>
 				<th class="SortedColumn">', __('PTADU'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
@@ -521,6 +559,8 @@ or deletion of the records*/
 				<td class="number">' . locale_number_format($MyRow['comissionccbri'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionamexbri'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionqrismandiri'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionqrisbca'], 2) . "%" . '</td>
+				<td class="number">' . locale_number_format($MyRow['comissionqrisbni'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['comissionqrisbri'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['percentconsignmentptadu'], 0) . "%" . '</td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
@@ -613,6 +653,12 @@ if (!isset($_GET['delete'])) {
 					accountqrismandiri,
 					comissionqrismandiri,
 					settlementdelayqrismandiri,
+					accountqrisbca,
+					comissionqrisbca,
+					settlementdelayqrisbca,
+					accountqrisbni,
+					comissionqrisbni,
+					settlementdelayqrisbni,
 					accountqrisbri,
 					comissionqrisbri,
 					settlementdelayqrisbri
@@ -699,6 +745,14 @@ if (!isset($_GET['delete'])) {
 		$_POST['AccountQRISMandiri'] = $MyRow['accountqrismandiri'];
 		$_POST['ComissionQRISMandiri'] = $MyRow['comissionqrismandiri'];
 		$_POST['SettlementDelayQRISMandiri'] = $MyRow['settlementdelayqrismandiri'];
+
+		$_POST['AccountQRISBCA'] = $MyRow['accountqrisbca'];
+		$_POST['ComissionQRISBCA'] = $MyRow['comissionqrisbca'];
+		$_POST['SettlementDelayQRISBCA'] = $MyRow['settlementdelayqrisbca'];
+
+		$_POST['AccountQRISBNI'] = $MyRow['accountqrisbni'];
+		$_POST['ComissionQRISBNI'] = $MyRow['comissionqrisbni'];
+		$_POST['SettlementDelayQRISBNI'] = $MyRow['settlementdelayqrisbni'];
 
 		$_POST['AccountQRISBRI'] = $MyRow['accountqrisbri'];
 		$_POST['ComissionQRISBRI'] = $MyRow['comissionqrisbri'];
@@ -917,6 +971,26 @@ if (!isset($_GET['delete'])) {
 		$_POST['SettlementDelayQRISMandiri'] = 1;
 	}
 
+	if (!isset($_POST['AccountQRISBCA'])) {
+		$_POST['AccountQRISBCA'] = '';
+	}
+	if (!isset($_POST['ComissionQRISBCA'])) {
+		$_POST['ComissionQRISBCA'] = 0;
+	}
+	if (!isset($_POST['SettlementDelayQRISBCA'])) {
+		$_POST['SettlementDelayQRISBCA'] = 1;
+	}
+
+	if (!isset($_POST['AccountQRISBNI'])) {
+		$_POST['AccountQRISBNI'] = '';
+	}
+	if (!isset($_POST['ComissionQRISBNI'])) {
+		$_POST['ComissionQRISBNI'] = 0;
+	}
+	if (!isset($_POST['SettlementDelayQRISBNI'])) {
+		$_POST['SettlementDelayQRISBNI'] = 1;
+	}
+
 	if (!isset($_POST['AccountQRISBRI'])) {
 		$_POST['AccountQRISBRI'] = '';
 	}
@@ -1020,6 +1094,18 @@ if (!isset($_GET['delete'])) {
 	echo FieldToSelectOneGLAccount('AccountQRISMandiri', $_POST['AccountQRISMandiri'], __('QRIS Mandiri GL Account'));
 	echo FieldToSelectOneText('SettlementDelayQRISMandiri', $_POST['SettlementDelayQRISMandiri'], 3, 3, __('Settlement Delay QRIS Mandiri (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionQRISMandiri', $_POST['ComissionQRISMandiri'], 5, 5, __('% Comission QRIS Mandiri'));
+	echo '</fieldset>';
+
+	echo '<fieldset><legend>' . __('BCA') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountQRISBCA', $_POST['AccountQRISBCA'], __('QRIS BCA GL Account'));
+	echo FieldToSelectOneText('SettlementDelayQRISBCA', $_POST['SettlementDelayQRISBCA'], 3, 3, __('Settlement Delay QRIS BCA (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionQRISBCA', $_POST['ComissionQRISBCA'], 5, 5, __('% Comission QRIS BCA'));
+	echo '</fieldset>';
+
+	echo '<fieldset><legend>' . __('BNI') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountQRISBNI', $_POST['AccountQRISBNI'], __('QRIS BNI GL Account'));
+	echo FieldToSelectOneText('SettlementDelayQRISBNI', $_POST['SettlementDelayQRISBNI'], 3, 3, __('Settlement Delay QRIS BNI (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionQRISBNI', $_POST['ComissionQRISBNI'], 5, 5, __('% Comission QRIS BNI'));
 	echo '</fieldset>';
 
 	echo '<fieldset><legend>' . __('BRI') . '</legend>';

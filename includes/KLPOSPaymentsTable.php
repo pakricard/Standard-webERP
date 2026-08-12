@@ -115,6 +115,22 @@ if ($_SESSION['ComissionQRISMandiri'] != 0){
 }
 echo '</tr>';
 
+if ($_SESSION['ComissionQRISBCA'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('QRIS BCA') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidQRISBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidQRISBCA'] . '" /></td>
+		</tr>';
+}
+
+if ($_SESSION['ComissionQRISBNI'] != 0){
+	echo '<tr>
+			<td></td>
+			<td>' . __('QRIS BNI') . ':</td>
+			<td><input type="text" class="number" name="AmountPaidQRISBNI" maxlength="12" size="12" value="' . $_POST['AmountPaidQRISBNI'] . '" /></td>
+		</tr>';
+}
+
 if ($_SESSION['ComissionQRISBRI'] != 0){
 	echo '<tr>
 			<td></td>
