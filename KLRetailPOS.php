@@ -166,7 +166,7 @@ if (isset($_POST['CancelOrder'])) {
 
 /* Always do the stuff below */
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'identifier=' . $identifier . '" name="SelectParts" method="post">';
+echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '" name="SelectParts" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 //Fix The exchange rate, only to work in functional currency

@@ -92,7 +92,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 	echo '<td class="number">' . number_format($OrderLine->DiscountPercent * 100, 0) . '</td>';
 
 	echo '<td class="number">' . number_format($SubTotal + $TaxLineTotal, 0) . '</td>';
-	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;identifier=' . $identifier . '&amp;Delete=' . 
+	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?identifier=' . $identifier . '&amp;Delete=' . 
 		$OrderLine->LineNumber . '" onclick="return confirm(\'' . __('Are You Sure?') . '\');">' . __('Delete') . '</a></td></tr>';
 
 } /* end of loop around items */
