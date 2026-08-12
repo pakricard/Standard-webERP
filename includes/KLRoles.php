@@ -42,7 +42,7 @@ if (isset($_SESSION['AccessLevel'])){
 		$KL_Partner = true;
 	} elseif ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support
 		$KL_SPGJunior = true;
-	} elseif ($_SESSION['AccessLevel'] == 23){ // Shop Support Leader (Ria)
+	} elseif ($_SESSION['AccessLevel'] == 23){ // Shop Support Leader (Ririn)
 		$KL_ShopSupportTeam = true;
 		$KL_ShopSupportLeader = true;
 	} elseif ($_SESSION['AccessLevel'] == 24){ // Purchasing Leader (Cicik)
@@ -66,7 +66,7 @@ if (isset($_SESSION['AccessLevel'])){
 	} elseif ($_SESSION['AccessLevel'] == 37){ // Operational Leader (Novik)
 		$KL_OperationalLeader = true;
 		$KL_OperationalTeam = true;
-	} elseif ($_SESSION['AccessLevel'] == 38){ // HRD Manager (Taufik)
+	} elseif ($_SESSION['AccessLevel'] == 38){ // HRD Manager (Yuli)
 		$KL_HRDManager = true;
 	} elseif ($_SESSION['AccessLevel'] == 39){ // Marketing Manager (---)
 		$KL_MarketingManager = true;
