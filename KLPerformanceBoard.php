@@ -437,7 +437,9 @@ if ($ProcessSection04){
 		$TableTitleText = "Human Resources Performance Board Section 04";
 		ShowTableTitle($TableTitleText);
 	}
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		or $KL_Partner
+		or $KL_HRDManager){
 		$StartTime = microtime(true);
 		HumanResourcesKPIScreenShot();
 		TimeNeededForExecution("HumanResourcesKPIScreenShot", $StartTime, $KL_SystemAdmin);

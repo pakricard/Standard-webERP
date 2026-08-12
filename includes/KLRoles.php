@@ -60,7 +60,6 @@ if (isset($_SESSION['AccessLevel'])){
 	} elseif ($_SESSION['AccessLevel'] == 32){ // It Support
 		$KL_ITSupport = true;
 	} elseif ($_SESSION['AccessLevel'] == 34){ // Sales Team Manager (a.k.a Fathus)
-		$KL_PurchasingManager = true;
 		$KL_SalesTeamManager = true;
 	} elseif ($_SESSION['AccessLevel'] == 36){ // Customer Service (a.k.a. Nia)
 		$KL_CustomerService = true;
